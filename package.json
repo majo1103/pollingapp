@@ -7,8 +7,12 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm run build",
     "build": "webpack-dev-server --open",
-    "build:prod": "webpack -p",
-    "precommit": "pretty-quick --staged"
+    "build:prod": "webpack -p"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
   },
   "keywords": [
     "reactjs"

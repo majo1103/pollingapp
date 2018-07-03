@@ -8,13 +8,7 @@
     "start": "npm run build",
     "build": "webpack-dev-server --open",
     "build:prod": "webpack -p",
-    "precommit": "lint-staged"
-  },
-  "lint-staged": {
-    "*.{js,jsx,json,css}": [
-      "prettier --write",
-      "git add"
-    ]
+    "precommit": "webpack-dev-server --open"
   },
   "keywords": [
     "reactjs"

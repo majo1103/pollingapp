@@ -1,5 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CleanWebpackPlugin = require("clean-webpack-plugin");
 const webpack = require("webpack");
 
 const DIST_DIR = path.resolve(__dirname, "dist");
@@ -9,6 +10,7 @@ const config = {
   mode: "development",
   entry: SRC_DIR + "/app/index.js",
   plugins: [
+    new CleanWebpackPlugin(["dist"]),
     new HtmlWebpackPlugin({
       title: "PoolingApp",
       filename: "index.html",
@@ -18,11 +20,12 @@ const config = {
   devtool: "inline-source-map",
   devServer: {
     contentBase: SRC_DIR,
-    publicPath: "/app"
+    historyApiFallback: true
   },
   output: {
     path: DIST_DIR + "/app",
-    filename: "bundle.js"
+    filename: "bundle.js",
+    publicPath: "/"
   },
   module: {
     rules: [
@@ -37,6 +40,14 @@ const config = {
             }
           }
         ]
+      },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"]
+      },
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        use: ["file-loader"]
       }
     ]
   }

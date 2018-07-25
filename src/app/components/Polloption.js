@@ -1,4 +1,5 @@
 import React from "react";
+import { runInDebugContext } from "vm";
 
 export class Polloption extends React.Component {
   constructor(props) {
@@ -7,20 +8,22 @@ export class Polloption extends React.Component {
   }
 
   handleUpVote() {
-    this.props.onVote(this.props.id);
+    this.props.onChange(this.props.id);
   }
 
   render() {
     return (
-      <li>
-        <div>{this.props.title}</div>
-        <div>
-          <button className="btn btn-primary" onClick={this.handleUpVote}>
-            vote
-          </button>
-          <span> number of votes: {this.props.votes}</span>
-        </div>
-      </li>
+      <div>
+        <input
+          type="radio"
+          className="form-check-input"
+          checked={this.props.active}
+          onChange={this.handleUpVote}
+        />
+        <label className="form-check-label" style={{ color: "white" }}>
+          {this.props.title}
+        </label>
+      </div>
     );
   }
 }

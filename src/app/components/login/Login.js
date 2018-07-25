@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 
 import { client } from "../../Client";
 import "./Login-Form-Dark.css";
@@ -9,14 +9,37 @@ export class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      shouldRedirect: false
+      email: "",
+      password: "",
+      shouldRedirect: false,
+      message: ""
     };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.performLogin = this.performLogin.bind(this);
     this.redirectPath = this.redirectPath.bind(this);
   }
 
-  performLogin() {
-    client.login().then(() => this.setState({ shouldRedirect: true }));
+  validateForm() {
+    return this.state.email.length > 0 && this.state.password.length > 0;
+  }
+
+  handleChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+  }
+
+  performLogin(event) {
+    if (client.login(this.state.email)) {
+      this.setState({ shouldRedirect: true });
+    } else {
+      this.setState({ message: "Please register first" });
+    }
   }
 
   redirectPath() {
@@ -32,7 +55,7 @@ export class Login extends React.Component {
     } else {
       return (
         <div className="login-dark">
-          <form>
+          <form onSubmit={this.handleSubmit}>
             <div className="illustration">
               <i className="icon ion-ios-locked-outline" />
             </div>
@@ -42,6 +65,8 @@ export class Login extends React.Component {
                 type="email"
                 name="email"
                 placeholder="Email"
+                onChange={this.handleChange}
+                autoFocus
               />
             </div>
             <div className="form-group">
@@ -50,6 +75,7 @@ export class Login extends React.Component {
                 type="password"
                 name="password"
                 placeholder="Password"
+                onChange={this.handleChange}
               />
             </div>
             <div className="form-group">
@@ -57,14 +83,20 @@ export class Login extends React.Component {
                 className="btn btn-primary btn-block"
                 type="submit"
                 onClick={this.performLogin}
+                disabled={!this.validateForm()}
               >
                 Log In
               </button>
             </div>
             <div className="form-group">
-              <button className="btn btn-primary btn-block" type="submit">
+              <Link className="btn btn-primary btn-block" to="/register">
                 Register
-              </button>
+              </Link>
+            </div>
+            <div>
+              <label name="message" className="forgot">
+                {this.state.message}
+              </label>
             </div>
           </form>
         </div>

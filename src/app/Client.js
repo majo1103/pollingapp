@@ -6,11 +6,9 @@ class Client {
       this.user = sessionStorage.getItem("USER");
 
       if (this.user) {
-        this.isUserValid().then(bool => {
-          if (!bool) {
-            this.user = null;
-          }
-        });
+        if (!this.isUserValid(this.user)) {
+          this.user = null;
+        }
       }
     }
   }
@@ -35,9 +33,11 @@ class Client {
     }
   }
 
-  isUserValid() {
-    if (this.user === "admin") {
+  isUserValid(user) {
+    if (user === "admin@server.pl") {
       return true;
+    } else {
+      return false;
     }
   }
 
@@ -58,8 +58,13 @@ class Client {
       .then(this.parseJson);
   }
 
-  login() {
-    this.setUser(this.user);
+  login(user) {
+    if (this.isUserValid(user)) {
+      this.setUser(user);
+      return true;
+    } else {
+      return false;
+    }
   }
 
   logout() {

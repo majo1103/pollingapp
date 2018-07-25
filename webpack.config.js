@@ -15,6 +15,9 @@ const config = {
       title: "PoolingApp",
       filename: "index.html",
       template: "src/index.html"
+    }),
+    new webpack.DefinePlugin({
+      "process.env.NODE_ENV": JSON.stringify("production")
     })
   ],
   devtool: "inline-source-map",

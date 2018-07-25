@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App should have the \`switch\` element 1`] = `
+<Switch>
+  <PrivateRoute
+    component={[Function]}
+    path="/poll"
+  />
+  <Route
+    component={[Function]}
+    path="/login"
+  />
+  <Route
+    component={[Function]}
+    path="/logout"
+  />
+  <Route
+    component={[Function]}
+    path="/register"
+  />
+  <Route
+    exact={true}
+    path="/"
+    render={[Function]}
+  />
+  <Route
+    component={[Function]}
+  />
+</Switch>
+`;
